@@ -36,8 +36,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static android.os.Build.VERSION.SDK_INT;
-
 public class IOther {
     private static IOther instance;
     private Context context;
@@ -78,14 +76,14 @@ public class IOther {
     public void privacyPolicy(String pack) {
         Uri uri = Uri.parse(pack);
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(intent);
+        this.startActivity(intent);
     }
 
     public int getColorResource(int id){
         return ResourcesCompat.getColor(context.getResources(), id, null);
     }
 
-    public String convertPercentToHex(float percent) {
+    public static String convertPercentToHex(float percent) {
         int hexInt = (int) (percent * 255);
         if (hexInt > 255) {
             hexInt = 255;
@@ -100,13 +98,13 @@ public class IOther {
     public void openMarket() {
         final String appPackageName = context.getPackageName();
         try {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-        } catch (ActivityNotFoundException anfe) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+            this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (ActivityNotFoundException ignored) {
+            this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
         }
     }
 
-    public String initJson(String fileName) {
+    public String readFileAssets(String fileName) {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(context.getAssets().open(fileName)));
             String mLine;
@@ -151,33 +149,30 @@ public class IOther {
     }
 
     private Bitmap drawableToBitmap(Drawable drawable) {
-        Bitmap bitmap = null;
         if (drawable instanceof BitmapDrawable) {
             BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
             if (bitmapDrawable.getBitmap() != null) {
                 return bitmapDrawable.getBitmap();
             }
         }
-        if (drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
-            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
-            // Single color bitmap will be created of 1x1 pixel
-        } else {
+        Bitmap bitmap = null;
+        if (drawable.getIntrinsicWidth() > 0 || drawable.getIntrinsicHeight() > 0) {
             bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            drawable.draw(canvas);
         }
 
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
         return bitmap;
     }
 
-    public File saveBitmap(Bitmap bmp, String folder, String name) {
+    public static File saveBitmap(Bitmap bmp, String folder, String name) {
         String path = Environment.getExternalStorageDirectory().toString()
                 + "/" + folder + "/";
         File f = new File(path);
         if (!f.exists()) {
             if (!f.mkdirs()) {
-                Toast.makeText(context, "Create directory fail", Toast.LENGTH_SHORT).show();
+                ILog.e("Create directory fail");
             }
         }
         SimpleDateFormat sdf = new SimpleDateFormat("_HH_mm_ss_dd_MM_yyyy");
@@ -210,7 +205,7 @@ public class IOther {
         return file;
     }
 
-    public Bitmap getBitmapResize(Bitmap bitmap, int max, boolean filter) {
+    public static Bitmap getBitmapResize(Bitmap bitmap, int max, boolean filter) {
         int wb = bitmap.getWidth();
         int hb = bitmap.getHeight();
         int maxb = wb > hb ? wb : hb;
@@ -274,7 +269,7 @@ public class IOther {
     }
 
     public boolean checkDrawOverlaysPermission(final Context contextActivity) {
-        if (SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(context)) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(context)) {
             AlertDialog alertDialog = new AlertDialog.Builder(contextActivity)
                     .setTitle("Permission")
                     .setMessage("Application need draw overlays permission, you can turn on this permission?")
@@ -299,7 +294,7 @@ public class IOther {
         return true;
     }
 
-    public String unAccent(String s) {
+    public static String unAccent(String s) {
         // option special 'Đ-đ' :))
         s = s.replace("Đ", "D").replace("đ", "d");
         String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
@@ -317,7 +312,7 @@ public class IOther {
         context.sendBroadcast(mediaScanIntent);
     }
 
-    public String getTimeFormat(long timeMili) {
+    public static String getTimeFormat(long timeMili) {
         timeMili /= 1000; // mili second
         String tm = "";
         long s;
@@ -346,7 +341,7 @@ public class IOther {
         return tm;
     }
 
-    public String getTimeFormatMili(long timeMili) {
+    public static String getTimeFormatMili(long timeMili) {
         int ml = (int) (timeMili % 1000);
         timeMili /= 1000; // mili second
         String tm = "";
@@ -383,7 +378,11 @@ public class IOther {
     }
 
     public void toast(Object s) {
-        Toast.makeText(context, s.toString(), Toast.LENGTH_SHORT).show();
+        toast(s, Toast.LENGTH_SHORT);
+    }
+
+    public void toast(Object s, int time) {
+        Toast.makeText(context, s.toString(), time).show();
     }
 
     public void about() {

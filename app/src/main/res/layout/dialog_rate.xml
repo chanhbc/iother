@@ -15,7 +15,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/_16sdp"/>
 
-    <com.library.forme.ITextView
+    <com.chanhbc.iother.ITextView
         android:id="@+id/txt_name_app"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         app:font_format="otf"
         android:textSize="@dimen/_18ssp"/>
 
-    <com.library.forme.ITextView
+    <com.chanhbc.iother.ITextView
         android:id="@+id/txt_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.library.forme.IButton
+        <com.chanhbc.iother.IButton
             android:id="@+id/btn_cancel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -81,7 +81,7 @@
             android:layout_height="match_parent"
             android:background="#d8d8d8"/>
     
-        <com.library.forme.IButton
+        <com.chanhbc.iother.IButton
             android:id="@+id/btn_ok"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
