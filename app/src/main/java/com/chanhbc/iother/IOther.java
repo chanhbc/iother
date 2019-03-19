@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Vibrator;
 import android.provider.Settings;
+import android.support.v4.content.FileProvider;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
@@ -133,7 +134,7 @@ public class IOther {
         try {
             ((Activity) contextActivity).startActivityForResult(activity, requestCode);
         } catch (ActivityNotFoundException e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -312,6 +313,41 @@ public class IOther {
         context.sendBroadcast(mediaScanIntent);
     }
 
+    public void saveBitmapCache(Bitmap bitmap) {
+        // save bitmap to cache directory
+        try {
+            File cachePath = new File(context.getCacheDir(), "images");
+            if(!cachePath.exists()) {
+                if (!cachePath.mkdirs()) {
+                    ILog.e("create directory fail");
+                }
+            }
+            FileOutputStream stream = new FileOutputStream(cachePath + "/image_cache.png");
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            stream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void shareBitmapCache() {
+        File imagePath = new File(context.getCacheDir(), "images");
+        if(imagePath.exists()) {
+            File newFile = new File(imagePath, "image_cache.png");
+            if(newFile.exists()) {
+                Uri contentUri = FileProvider.getUriForFile(context, context.getPackageName(), newFile);
+                if (contentUri != null) {
+                    Intent shareIntent = new Intent();
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    shareIntent.setDataAndType(contentUri, context.getContentResolver().getType(contentUri));
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+                    startActivity(Intent.createChooser(shareIntent, "Choose an app"));
+                }
+            }
+        }
+    }
+
     public static String getTimeFormat(long timeMili) {
         timeMili /= 1000; // mili second
         String tm = "";
@@ -323,12 +359,10 @@ public class IOther {
         if (m >= 60) {
             h = m / 60;
             m = m % 60;
-            if (h > 0) {
-                if (h < 10)
-                    tm += "0" + h + ":";
-                else
-                    tm += h + ":";
-            }
+            if (h < 10)
+                tm += "0" + h + ":";
+            else
+                tm += h + ":";
         }
         if (m < 10)
             tm += "0" + m + ":";
@@ -353,12 +387,10 @@ public class IOther {
         if (m >= 60) {
             h = m / 60;
             m = m % 60;
-            if (h > 0) {
-                if (h < 10)
-                    tm += "0" + h + ":";
-                else
-                    tm += h + ":";
-            }
+            if (h < 10)
+                tm += "0" + h + ":";
+            else
+                tm += h + ":";
         }
         if (m < 10)
             tm += "0" + m + ":";
@@ -427,6 +459,7 @@ public class IOther {
     }
 
 
+    @SuppressLint ("IntentReset")
     public void feedback(String app_name, String supportEmail, String version) {
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
         emailIntent.setType("text/html");
