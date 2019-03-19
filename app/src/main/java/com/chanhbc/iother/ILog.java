@@ -4,7 +4,7 @@ import android.util.Log;
 
 
 public class ILog {
-	private static boolean isLog = BuildConfig.DEBUG;
+	private static boolean isLog = true;
 	private static String MY_TAG = "bc";
 
 	public static void setIsLog(boolean isLog) {
