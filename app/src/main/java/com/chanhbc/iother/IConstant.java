@@ -5,10 +5,10 @@ public class IConstant {
     public static final int REQUEST_CODE_DRAW_OVERLAY_PERMISSIONS = 6996;
     public static final String MY_TAG = "bc";
     public static final String FONT_FOLDER = "fonts";
+    public static final String JSON_FOLDER = "json";
     public static final String FLASH = "/";
     public static final String DOT = ".";
     public static final String TTF = "ttf";
     public static final String OTF = "otf";
-    public static final int WIDTH_SCREEN = IContext.getContext().getResources().getDisplayMetrics().widthPixels;
-    public static final int HEIGHT_SCREEN = IContext.getContext().getResources().getDisplayMetrics().heightPixels;
+    public static final String KEY_IS_RATE = "key_is_rate";
 }

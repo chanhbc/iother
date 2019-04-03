@@ -89,7 +89,7 @@
             android:background="?attr/selectableItemBackground"
             android:gravity="center"
             android:padding="@dimen/_8sdp"
-            android:text="@string/submit"
+            android:text="@string/rate"
             android:textAllCaps="false"
             android:textColor="#ff2d54"
             android:textSize="@dimen/_18ssp"/>
