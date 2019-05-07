@@ -75,6 +75,42 @@ public class IOther {
 		return false;
 	}
 
+	/**
+	 * A utility method to get the application's PackageInfo.versionName
+	 * @return the application's PackageInfo.versionName
+	 */
+	public String getVersionName() {
+		try {
+			if (context == null) {
+				return "";
+			}
+			final String packageName = context.getPackageName();
+			final PackageInfo info = context.getPackageManager().getPackageInfo(packageName, 0);
+			return info.versionName;
+		} catch (final PackageManager.NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+
+	/**
+	 * A utility method to get the application's PackageInfo.versionCode
+	 * @return the application's PackageInfo.versionCode
+	 */
+	public int getVersionCode() {
+		try {
+			if (context == null) {
+				return 0;
+			}
+			final String packageName = context.getPackageName();
+			final PackageInfo info = context.getPackageManager().getPackageInfo(packageName, 0);
+			return info.versionCode;
+		} catch (final PackageManager.NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
 	public void privacyPolicy(String pack) {
 		Uri uri = Uri.parse(pack);
 		Intent intent = new Intent(Intent.ACTION_VIEW, uri);

@@ -24,9 +24,14 @@ public class IRate extends Dialog {
 	private RatingBar mBar;
 	private String email;
 	private int numberStar = 3;
+	private boolean isExit;
 
 	public void setNumberStar(int numberStar) {
 		this.numberStar = numberStar;
+	}
+
+	public void setExit(boolean exit) {
+		isExit = exit;
 	}
 
 	public IRate(Context context, String email) {
@@ -79,7 +84,10 @@ public class IRate extends Dialog {
 		btnNotNow.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				finish();
+				dismiss();
+				if (isExit) {
+					finish();
+				}
 			}
 		});
 		mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {

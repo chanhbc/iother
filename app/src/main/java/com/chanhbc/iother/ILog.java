@@ -2,132 +2,160 @@ package com.chanhbc.iother;
 
 import android.util.Log;
 
+import java.util.Arrays;
+
 
 public class ILog {
-	private static boolean isLog = true;
+	private static boolean enabled = true;
 	private static String MY_TAG = "bc";
 
-	public static void setIsLog(boolean isLog) {
-		ILog.isLog = isLog;
+	public enum SUB_TYPE {LOG, TAG_LOG, T_LOG, TAG_T_LOG}
+
+	public enum LOG_TYPE {D, E, I, V, W, WTF}
+
+	public static void setEnabled(boolean enabled) {
+		ILog.enabled = enabled;
 	}
 
-	public static void d(Object objTag, Object objLog) {
-		d(MY_TAG, objTag, objLog);
+	public static void setTag(String myTag) {
+		MY_TAG = myTag;
 	}
 
-	public static void d(String TAG, Object objTag, Object objLog) {
-		if (isLog) {
-			Log.d(TAG, objTag.getClass().getSimpleName() + "-" + String.valueOf(objLog));
+	public static void d(Object... objLog) {
+		d(SUB_TYPE.LOG, objLog);
+	}
+
+	public static void d(SUB_TYPE subType, Object... objects) {
+		log(LOG_TYPE.D, subType, objects);
+	}
+
+	public static void e(Object... objLog) {
+		e(SUB_TYPE.LOG, objLog);
+	}
+
+	public static void e(SUB_TYPE subType, Object... objects) {
+		log(LOG_TYPE.E, subType, objects);
+	}
+
+	public static void i(Object... objLog) {
+		i(SUB_TYPE.LOG, objLog);
+	}
+
+	public static void i(SUB_TYPE subType, Object... objects) {
+		log(LOG_TYPE.I, subType, objects);
+	}
+
+	public static void v(Object... objLog) {
+		v(SUB_TYPE.LOG, objLog);
+	}
+
+	public static void v(SUB_TYPE subType, Object... objects) {
+		log(LOG_TYPE.V, subType, objects);
+	}
+
+	public static void w(Object... objLog) {
+		w(SUB_TYPE.LOG, objLog);
+	}
+
+	public static void w(SUB_TYPE subType, Object... objects) {
+		log(LOG_TYPE.W, subType, objects);
+	}
+
+	public static void wtf(Object... objLog) {
+		wtf(SUB_TYPE.LOG, objLog);
+	}
+
+	public static void wtf(SUB_TYPE subType, Object... objects) {
+		log(LOG_TYPE.WTF, subType, objects);
+	}
+
+	private static String arrayToString(Object... objects) {
+		if (objects == null || objects.length == 0) {
+			return "";
+		}
+		StringBuilder result = new StringBuilder();
+		for (int i = 0; ; i++) {
+			Object object = objects[i];
+			if (i == objects.length - 1) {
+				return result.append(String.valueOf(object)).toString();
+			}
+			result.append(String.valueOf(object));
 		}
 	}
 
-	public static void d(Object objLog) {
-		d(MY_TAG, objLog);
-	}
+	private static void log(LOG_TYPE logType, SUB_TYPE subType, Object... objects) {
+		if (objects == null || objects.length == 0) {
+			log(logType, MY_TAG, "<no log>");
+			return;
+		}
+		switch (subType) {
+			case LOG:
+				log(logType, MY_TAG, arrayToString(objects));
+				break;
 
-	public static void d(String TAG, Object objLog) {
-		if (isLog) {
-			Log.d(TAG, String.valueOf(objLog));
+			case T_LOG:
+				if (objects.length > 1) {
+					log(logType, MY_TAG, objects[0].getClass().getSimpleName() + "-" + arrayToString(Arrays.copyOfRange(objects, 1, objects.length)));
+				} else {
+					log(logType, MY_TAG, arrayToString(objects));
+				}
+				break;
+
+			case TAG_LOG:
+				if (objects.length > 1) {
+					log(logType, objects[0].toString(), arrayToString(Arrays.copyOfRange(objects, 1, objects.length)));
+				} else {
+					log(logType, MY_TAG, arrayToString(objects));
+				}
+				break;
+
+			case TAG_T_LOG:
+				if (objects.length > 2) {
+					log(logType, objects[0].toString(), objects[1].getClass().getSimpleName() + "-" + arrayToString(Arrays.copyOfRange(objects, 2, objects.length)));
+				} else {
+					log(logType, MY_TAG, arrayToString(objects));
+				}
+				break;
+
+			default:
+				log(logType, MY_TAG, arrayToString(objects));
+				break;
 		}
 	}
 
-	public static void e(Object objTag, Object objLog) {
-		e(MY_TAG, objTag, objLog);
-	}
+	private static void log(LOG_TYPE logType, String TAG, Object objLog) {
+		if (!enabled) {
+			return;
+		}
+		switch (logType) {
+			case D:
+				Log.d(TAG, String.valueOf(objLog));
+				break;
 
-	public static void e(String TAG, Object objTag, Object objLog) {
-		if (isLog) {
-			Log.e(TAG, objTag.getClass().getSimpleName() + "-" +String.valueOf(objLog));
+			case E:
+				Log.e(TAG, String.valueOf(objLog));
+				break;
+
+			case I:
+				Log.i(TAG, String.valueOf(objLog));
+				break;
+
+			case V:
+				Log.v(TAG, String.valueOf(objLog));
+				break;
+
+			case W:
+				Log.w(TAG, String.valueOf(objLog));
+				break;
+
+			case WTF:
+				Log.wtf(TAG, String.valueOf(objLog));
+				break;
+
+			default:
+				Log.e(TAG, String.valueOf(objLog));
+				break;
 		}
 	}
 
-	public static void e(Object objLog) {
-		e(MY_TAG, objLog);
-	}
-
-	public static void e(String TAG, Object objLog) {
-		if (isLog) {
-			Log.e(TAG, String.valueOf(objLog));
-		}
-	}
-
-	public static void v(Object objTag, Object objLog) {
-		v(MY_TAG, objTag, objLog);
-	}
-
-	public static void v(String TAG, Object objTag, Object objLog) {
-		if (isLog) {
-			Log.v(TAG, objTag.getClass().getSimpleName() + "-" +String.valueOf(objLog));
-		}
-	}
-
-	public static void v(Object objLog) {
-		v(MY_TAG, objLog);
-	}
-
-	public static void v(String TAG, Object objLog) {
-		if (isLog) {
-			Log.v(TAG, String.valueOf(objLog));
-		}
-	}
-
-	public static void i(Object objTag, Object objLog) {
-		i(MY_TAG, objTag, objLog);
-	}
-
-	public static void i(String TAG, Object objTag, Object objLog) {
-		if (isLog) {
-			Log.i(TAG, objTag.getClass().getSimpleName() + "-" +String.valueOf(objLog));
-		}
-	}
-
-	public static void i(Object objLog) {
-		i(MY_TAG, objLog);
-	}
-
-	public static void i(String TAG, Object objLog) {
-		if (isLog) {
-			Log.i(TAG, String.valueOf(objLog));
-		}
-	}
-
-	public static void w(Object objTag, Object objLog) {
-		w(MY_TAG, objTag, objLog);
-	}
-
-	public static void w(String TAG, Object objTag, Object objLog) {
-		if (isLog) {
-			Log.w(TAG, objTag.getClass().getSimpleName() + "-" +String.valueOf(objLog));
-		}
-	}
-
-	public static void w(Object objLog) {
-		w(MY_TAG, objLog);
-	}
-
-	public static void w(String TAG, Object objLog) {
-		if (isLog) {
-			Log.w(TAG, String.valueOf(objLog));
-		}
-	}
-
-	public static void wtf(Object objTag, Object objLog) {
-		wtf(MY_TAG, objTag, objLog);
-	}
-
-	public static void wtf(String TAG, Object objTag, Object objLog) {
-		if (isLog) {
-			Log.wtf(TAG, objTag.getClass().getSimpleName() + "-" +String.valueOf(objLog));
-		}
-	}
-
-	public static void wtf(Object objLog) {
-		wtf(MY_TAG, objLog);
-	}
-
-	public static void wtf(String TAG, Object objLog) {
-		if (isLog) {
-			Log.wtf(TAG, String.valueOf(objLog));
-		}
-	}
 }
