@@ -77,6 +77,7 @@ public class IOther {
 
 	/**
 	 * A utility method to get the application's PackageInfo.versionName
+	 *
 	 * @return the application's PackageInfo.versionName
 	 */
 	public String getVersionName() {
@@ -95,6 +96,7 @@ public class IOther {
 
 	/**
 	 * A utility method to get the application's PackageInfo.versionCode
+	 *
 	 * @return the application's PackageInfo.versionCode
 	 */
 	public int getVersionCode() {
@@ -133,14 +135,40 @@ public class IOther {
 		return hex;
 	}
 
+	public boolean isPackageInstalled(String packageName) {
+		boolean isInstalled = false;
+		try {
+			context.getPackageManager().getPackageInfo(packageName, 0);
+			isInstalled = true;
+		} catch (PackageManager.NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		return isInstalled;
+	}
+
 	public void openMarket() {
 		final String appPackageName = context.getPackageName();
-		try {
-			context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-		} catch (ActivityNotFoundException ignored) {
-			context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-		} catch (Exception e){
-			e.printStackTrace();
+		openMarket(appPackageName);
+	}
+
+	public void openMarket(String packageName) {
+		String playStorePackageName = "com.android.vending";
+		if(isPackageInstalled(playStorePackageName)){
+			try {
+				context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
+			} catch (ActivityNotFoundException ignored) {
+				context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else {
+			try {
+				context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
+			} catch (ActivityNotFoundException ignored) {
+				context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -188,7 +216,7 @@ public class IOther {
 		return null;
 	}
 
-	private Bitmap drawableToBitmap(Drawable drawable) {
+	public static Bitmap drawableToBitmap(Drawable drawable) {
 		if (drawable instanceof BitmapDrawable) {
 			BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
 			if (bitmapDrawable.getBitmap() != null) {
@@ -215,23 +243,14 @@ public class IOther {
 				ILog.e("Create directory fail");
 			}
 		}
+		@SuppressLint ("SimpleDateFormat")
 		SimpleDateFormat sdf = new SimpleDateFormat("_HH_mm_ss_dd_MM_yyyy");
-		String currentDateandTime = sdf.format(new Date());
-		String fileName = name + currentDateandTime;
+		String currentDateAndTime = sdf.format(new Date());
+		String fileName = name + currentDateAndTime;
 		File file = new File(path, fileName + ".png");
 		if (file.exists()) {
 			if (!file.delete()) {
 				ILog.e("delete \"" + fileName + "\" error");
-			}
-		}
-		File nomedia = new File(path, ".nomedia");
-		if (!nomedia.exists()) {
-			try {
-				if (!nomedia.createNewFile()) {
-					ILog.e("create .nomedia fail");
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}
 		try {
@@ -431,15 +450,15 @@ public class IOther {
 		return null;
 	}
 
-	public static String getTimeFormatMili(long timeMili) {
-		int ml = (int) (timeMili % 1000);
-		timeMili /= 1000; // mili second
+	public static String getTimeFormatMilliseconds(long timeMilli) {
+		int ml = (int) (timeMilli % 1000);
+		timeMilli /= 1000; // mili second
 		String tm = "";
 		long s;
 		long m;
 		long h;
-		s = timeMili % 60;
-		m = (timeMili - s) / 60;
+		s = timeMilli % 60;
+		m = (timeMilli - s) / 60;
 		if (m >= 60) {
 			h = m / 60;
 			m = m % 60;
@@ -484,17 +503,14 @@ public class IOther {
 	}
 
 	public void feedback(String email) {
-		String version = "";
 		String appName = "";
 		try {
 			PackageManager packageManager = context.getPackageManager();
-			PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
 			appName = (String) packageManager.getApplicationLabel(packageManager.getApplicationInfo(context.getPackageName(), 0));
-			version = packageInfo.versionName;
 		} catch (PackageManager.NameNotFoundException e) {
 			e.printStackTrace();
 		}
-		feedback(appName, email, version);
+		feedback(appName, email, getVersionName());
 	}
 
 	public int getStatusBarHeight() {
