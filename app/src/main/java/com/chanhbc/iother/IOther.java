@@ -153,7 +153,7 @@ public class IOther {
 
 	public void openMarket(String packageName) {
 		String playStorePackageName = "com.android.vending";
-		if(isPackageInstalled(playStorePackageName)){
+		if (isPackageInstalled(playStorePackageName)) {
 			try {
 				context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
 			} catch (ActivityNotFoundException ignored) {
@@ -161,7 +161,7 @@ public class IOther {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else {
+		} else {
 			try {
 				context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
 			} catch (ActivityNotFoundException ignored) {
@@ -230,7 +230,6 @@ public class IOther {
 			drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
 			drawable.draw(canvas);
 		}
-
 		return bitmap;
 	}
 
@@ -373,14 +372,23 @@ public class IOther {
 
 	public void saveBitmapCache(Bitmap bitmap) {
 		// save bitmap to cache directory
+		saveBitmapCache("image_cache", bitmap);
+	}
+
+	public void saveBitmapCache(String fileName, Bitmap bitmap) {
+		// save bitmap to cache directory
+		File cachePath = new File(context.getCacheDir(), "images");
+		saveBitmapCache(cachePath, fileName, bitmap);
+	}
+
+	public void saveBitmapCache(File filePath, String fileName, Bitmap bitmap) {
 		try {
-			File cachePath = new File(context.getCacheDir(), "images");
-			if (!cachePath.exists()) {
-				if (!cachePath.mkdirs()) {
+			if (!filePath.exists()) {
+				if (!filePath.mkdirs()) {
 					ILog.e("create directory fail");
 				}
 			}
-			FileOutputStream stream = new FileOutputStream(cachePath + "/image_cache.png");
+			FileOutputStream stream = new FileOutputStream(filePath + "/" + fileName + ".png");
 			bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 			stream.close();
 		} catch (IOException e) {
@@ -406,14 +414,14 @@ public class IOther {
 		}
 	}
 
-	public static String getTimeFormat(long timeMili) {
-		timeMili /= 1000; // mili second
+	public static String getTimeFormat(long timeMilli) {
+		timeMilli /= 1000; // milli second
 		String tm = "";
 		long s;
 		long m;
 		long h;
-		s = timeMili % 60;
-		m = (timeMili - s) / 60;
+		s = timeMilli % 60;
+		m = (timeMilli - s) / 60;
 		if (m >= 60) {
 			h = m / 60;
 			m = m % 60;
@@ -452,7 +460,7 @@ public class IOther {
 
 	public static String getTimeFormatMilliseconds(long timeMilli) {
 		int ml = (int) (timeMilli % 1000);
-		timeMilli /= 1000; // mili second
+		timeMilli /= 1000; // milli second
 		String tm = "";
 		long s;
 		long m;
