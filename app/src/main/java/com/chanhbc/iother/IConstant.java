@@ -1,6 +1,8 @@
 package com.chanhbc.iother;
 
 public class IConstant {
+    private IConstant(){}
+
     public static final String PERMISSION_AUTO_START = "permission_auto_start";
     public static final int REQUEST_CODE_DRAW_OVERLAY_PERMISSIONS = 6996;
     public static final String MY_TAG = "bc";

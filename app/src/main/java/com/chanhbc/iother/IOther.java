@@ -39,10 +39,11 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class IOther {
+	@SuppressLint ("StaticFieldLeak")
 	private static IOther instance;
 	private Context context;
 
-	public IOther(Context context) {
+	private IOther(Context context) {
 		this.context = context;
 	}
 

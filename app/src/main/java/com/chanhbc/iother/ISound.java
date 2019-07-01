@@ -1,17 +1,18 @@
 package com.chanhbc.iother;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaPlayer;
 
 public class ISound {
+    @SuppressLint ("StaticFieldLeak")
+    private static ISound instance;
     private MediaPlayer mediaPlayer;
     private Context context;
-    private static ISound instance;
 
-    public ISound(Context context) {
+    private ISound(Context context) {
         this.context = context;
     }
-
 
     public static ISound getISound(Context context) {
         if (instance == null) {

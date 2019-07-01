@@ -9,7 +9,7 @@ public class IFontUtil {
     }
 
     public static Typeface getTypeface(String name, int format) {
-        return Typeface.createFromAsset(IContext.getContext().getAssets(),
+        return Typeface.createFromAsset(IApp.getContext().getAssets(),
                 IConstant.FONT_FOLDER + IConstant.FLASH + name + IConstant.DOT +
                         (format == 1 ? IConstant.TTF : IConstant.OTF));
     }

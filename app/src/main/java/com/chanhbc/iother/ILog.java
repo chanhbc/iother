@@ -4,8 +4,9 @@ import android.util.Log;
 
 import java.util.Arrays;
 
-
 public class ILog {
+	private ILog() {}
+
 	private static boolean enabled = true;
 	private static String MY_TAG = "bc";
 

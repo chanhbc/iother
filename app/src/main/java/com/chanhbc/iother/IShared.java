@@ -6,13 +6,11 @@ import android.content.SharedPreferences;
 
 public class IShared {
 	private static IShared instance;
-	private Context context;
 	private SharedPreferences sharedPreferences;
 	private SharedPreferences.Editor mEditor;
 
 	@SuppressLint ("CommitPrefEdits")
-	public IShared(Context context) {
-		this.context = context;
+	private IShared(Context context) {
 		this.sharedPreferences = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
 		this.mEditor = this.sharedPreferences.edit();
 	}
@@ -22,6 +20,14 @@ public class IShared {
 			instance = new IShared(context);
 		}
 		return instance;
+	}
+
+	public void setSharedChangeListener(SharedPreferences.OnSharedPreferenceChangeListener listener){
+		sharedPreferences.registerOnSharedPreferenceChangeListener(listener);
+	}
+
+	public void removeSharedChangeListener(SharedPreferences.OnSharedPreferenceChangeListener listener){
+		sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
 	}
 
 	/**
