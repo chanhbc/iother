@@ -14,7 +14,7 @@ public class ISound {
         this.context = context;
     }
 
-    public static ISound getISound(Context context) {
+    public static ISound getInstance(Context context) {
         if (instance == null) {
             instance = new ISound(context);
         }

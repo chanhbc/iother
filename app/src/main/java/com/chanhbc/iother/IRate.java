@@ -72,10 +72,10 @@ public class IRate extends Dialog {
 					Toast.makeText(context, context.getString(R.string.plz_rate_5_star), Toast.LENGTH_SHORT).show();
 				} else {
 					if (mBar.getRating() > numberStar) {
-						IShared.getIShare(context).putBoolean(IConstant.KEY_IS_RATE, true);
-						IOther.getIOther(context).openMarket();
+						IShared.getInstance(context).putBoolean(IConstant.KEY_IS_RATE, true);
+						IOther.getInstance(context).openMarket();
 					} else {
-						IOther.getIOther(context).feedback(email);
+						IOther.getInstance(context).feedback(email);
 					}
 					dismiss();
 				}
@@ -120,6 +120,6 @@ public class IRate extends Dialog {
 	}
 
 	public boolean isRate() {
-		return IShared.getIShare(context).getBoolean(IConstant.KEY_IS_RATE, false);
+		return IShared.getInstance(context).getBoolean(IConstant.KEY_IS_RATE, false);
 	}
 }

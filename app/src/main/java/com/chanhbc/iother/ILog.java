@@ -5,7 +5,8 @@ import android.util.Log;
 import java.util.Arrays;
 
 public class ILog {
-	private ILog() {}
+	private ILog() {
+	}
 
 	private static boolean enabled = true;
 	private static String MY_TAG = "bc";
@@ -78,9 +79,9 @@ public class ILog {
 		for (int i = 0; ; i++) {
 			Object object = objects[i];
 			if (i == objects.length - 1) {
-				return result.append(String.valueOf(object)).toString();
+				return result.append(object).toString();
 			}
-			result.append(String.valueOf(object));
+			result.append(object).append(" ");
 		}
 	}
 

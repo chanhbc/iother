@@ -15,7 +15,7 @@ public class IShared {
 		this.mEditor = this.sharedPreferences.edit();
 	}
 
-	public static IShared getIShare(Context context) {
+	public static IShared getInstance(Context context) {
 		if (instance == null) {
 			instance = new IShared(context);
 		}

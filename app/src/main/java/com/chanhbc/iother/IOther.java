@@ -47,7 +47,7 @@ public class IOther {
 		this.context = context;
 	}
 
-	public static IOther getIOther(Context context) {
+	public static IOther getInstance(Context context) {
 		if (instance == null) {
 			instance = new IOther(context);
 		}
@@ -278,7 +278,7 @@ public class IOther {
 		String manufacturerXiaomi = "xiaomi";
 		String manufacturerHuawei = "huawei";
 		if (manufacturerXiaomi.equalsIgnoreCase(Build.MANUFACTURER)) {
-			if (!IShared.getIShare(context).getBoolean(IConstant.PERMISSION_AUTO_START, false)) {
+			if (!IShared.getInstance(context).getBoolean(IConstant.PERMISSION_AUTO_START, false)) {
 				AlertDialog alertDialog = new AlertDialog.Builder(contextActivity)
 						.setTitle("Notification")
 						.setMessage("Device Xiaomi need auto start permission, you can turn on this permission?")
@@ -289,7 +289,7 @@ public class IOther {
 								Intent intent = new Intent();
 								intent.setComponent(new ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity"));
 								startActivity(intent);
-								IShared.getIShare(context).putBoolean(IConstant.PERMISSION_AUTO_START, true);
+								IShared.getInstance(context).putBoolean(IConstant.PERMISSION_AUTO_START, true);
 							}
 						})
 						.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -302,7 +302,7 @@ public class IOther {
 			}
 		}
 		if (manufacturerHuawei.equalsIgnoreCase(Build.MANUFACTURER)) {
-			if (!IShared.getIShare(context).getBoolean(IConstant.PERMISSION_AUTO_START, false)) {
+			if (!IShared.getInstance(context).getBoolean(IConstant.PERMISSION_AUTO_START, false)) {
 				AlertDialog alertDialog = new AlertDialog.Builder(contextActivity)
 						.setTitle("Notification")
 						.setMessage("Device Huawei need protected permission, you can turn on this permission?")
@@ -313,7 +313,7 @@ public class IOther {
 								Intent intent = new Intent();
 								intent.setClassName("com.huawei.systemmanager", "com.huawei.systemmanager.optimize.process.ProtectActivity");
 								startActivity(intent);
-								IShared.getIShare(context).putBoolean(IConstant.PERMISSION_AUTO_START, true);
+								IShared.getInstance(context).putBoolean(IConstant.PERMISSION_AUTO_START, true);
 							}
 						})
 						.setNegativeButton("No", new DialogInterface.OnClickListener() {
