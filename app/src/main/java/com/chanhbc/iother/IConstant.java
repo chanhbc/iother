@@ -10,6 +10,7 @@ public class IConstant {
     public static final String JSON_FOLDER = "json";
     public static final String FLASH = "/";
     public static final String DOT = ".";
+    public static final String SPACE = ".";
     public static final String TTF = "ttf";
     public static final String OTF = "otf";
     public static final String KEY_IS_RATE = "key_is_rate";

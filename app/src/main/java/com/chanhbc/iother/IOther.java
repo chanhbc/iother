@@ -156,17 +156,17 @@ public class IOther {
 		String playStorePackageName = "com.android.vending";
 		if (isPackageInstalled(playStorePackageName)) {
 			try {
-				context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
+				this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
 			} catch (ActivityNotFoundException ignored) {
-				context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
+				this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} else {
 			try {
-				context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
+				this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
 			} catch (ActivityNotFoundException ignored) {
-				context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
+				this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -192,6 +192,7 @@ public class IOther {
 
 	private void startActivity(Intent activity) {
 		try {
+			activity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			context.startActivity(activity);
 		} catch (ActivityNotFoundException e) {
 			e.printStackTrace();
@@ -288,7 +289,7 @@ public class IOther {
 								dialog.dismiss();
 								Intent intent = new Intent();
 								intent.setComponent(new ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity"));
-								startActivity(intent);
+								IOther.this.startActivity(intent);
 								IShared.getInstance(context).putBoolean(IConstant.PERMISSION_AUTO_START, true);
 							}
 						})
@@ -312,7 +313,7 @@ public class IOther {
 								dialog.dismiss();
 								Intent intent = new Intent();
 								intent.setClassName("com.huawei.systemmanager", "com.huawei.systemmanager.optimize.process.ProtectActivity");
-								startActivity(intent);
+								IOther.this.startActivity(intent);
 								IShared.getInstance(context).putBoolean(IConstant.PERMISSION_AUTO_START, true);
 							}
 						})
@@ -409,7 +410,7 @@ public class IOther {
 					shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 					shareIntent.setDataAndType(contentUri, context.getContentResolver().getType(contentUri));
 					shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
-					startActivity(Intent.createChooser(shareIntent, "Choose an app"));
+					this.startActivity(Intent.createChooser(shareIntent, "Choose an app"));
 				}
 			}
 		}
@@ -549,6 +550,6 @@ public class IOther {
 		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback App: " +
 				app_name + "(" + context.getPackageName() + ", version: " + version + ")");
 		emailIntent.putExtra(Intent.EXTRA_TEXT, "");
-		startActivity(Intent.createChooser(emailIntent, "Send mail Report App !"));
+		this.startActivity(Intent.createChooser(emailIntent, "Send mail Report App !"));
 	}
 }

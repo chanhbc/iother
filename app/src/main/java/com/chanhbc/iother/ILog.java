@@ -77,11 +77,11 @@ public class ILog {
 		}
 		StringBuilder result = new StringBuilder();
 		for (int i = 0; ; i++) {
-			Object object = objects[i];
+			String objectTrim = String.valueOf(objects[i]).trim();
 			if (i == objects.length - 1) {
-				return result.append(object).toString();
+				return result.append(objectTrim).toString();
 			}
-			result.append(object).append(" ");
+			result.append(objectTrim).append(IConstant.SPACE);
 		}
 	}
 
