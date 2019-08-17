@@ -35,6 +35,10 @@ public class IRate extends Dialog {
 	}
 
 	public IRate(Context context, String email) {
+		this(context, email, 3);
+	}
+
+	public IRate(Context context, String email, int times) {
 		super(context);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.dialog_rate);
@@ -43,6 +47,24 @@ public class IRate extends Dialog {
 		this.context = context;
 		this.email = email;
 		initDialog();
+		if (times > 0) {
+			initShowWhenAppOpen(times);
+		}
+	}
+
+	private static final String KEY_COUNT_OPEN_APP = "key_count_open_app";
+	private static final int VALUE_COUNT_OPEN_APP_DEFAULT = 0;
+
+	private void initShowWhenAppOpen(int times) {
+		if (!isRate()) {
+			int countOpen = IShared.getInstance(context).getInt(KEY_COUNT_OPEN_APP, VALUE_COUNT_OPEN_APP_DEFAULT);
+			countOpen++;
+			if (countOpen >= times) {
+				countOpen = times;
+				show();
+			}
+			IShared.getInstance(context).putInt(KEY_COUNT_OPEN_APP, countOpen);
+		}
 	}
 
 	private void initDialog() {
@@ -119,7 +141,11 @@ public class IRate extends Dialog {
 		}
 	}
 
-	public boolean isRate() {
+	public static boolean isRate(Context context) {
 		return IShared.getInstance(context).getBoolean(IConstant.KEY_IS_RATE, false);
+	}
+
+	public boolean isRate() {
+		return isRate(context);
 	}
 }

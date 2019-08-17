@@ -30,6 +30,14 @@ public class IShared {
 		sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
 	}
 
+	public void removeKey(String key){
+		this.mEditor.remove(key).apply();
+	}
+
+	public void clear(){
+		this.mEditor.clear().apply();
+	}
+
 	/**
 	 * defaultValue: false
 	 * */

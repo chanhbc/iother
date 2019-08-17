@@ -9,13 +9,11 @@ import android.widget.TextView;
 @SuppressLint("AppCompatCustomView")
 public class ITextView extends TextView {
     public ITextView(Context context) {
-        super(context);
-        init(context, null);
+        this(context, null);
     }
 
     public ITextView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context, attrs);
+        this(context, attrs, 0);
     }
 
     public ITextView(Context context, AttributeSet attrs, int defStyleAttr) {

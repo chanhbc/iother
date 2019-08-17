@@ -48,6 +48,9 @@ public class IOther {
 	}
 
 	public static IOther getInstance(Context context) {
+		if (context == null) {
+			throw new RuntimeException("Context null, Please install different context");
+		}
 		if (instance == null) {
 			instance = new IOther(context);
 		}
