@@ -3,11 +3,10 @@ package com.chanhbc.iother;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
-import android.widget.Button;
 
-@SuppressLint ("AppCompatCustomView")
-public class IButton extends Button {
+public class IButton extends AppCompatButton {
 	public IButton(Context context) {
 		this(context, null);
 	}

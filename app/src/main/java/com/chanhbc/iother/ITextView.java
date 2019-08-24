@@ -3,11 +3,10 @@ package com.chanhbc.iother;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
-@SuppressLint ("AppCompatCustomView")
-public class ITextView extends TextView {
+public class ITextView extends AppCompatTextView {
 	public ITextView(Context context) {
 		this(context, null);
 	}
