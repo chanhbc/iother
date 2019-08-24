@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_marginLeft="@dimen/_16sdp"
               android:layout_marginRight="@dimen/_16sdp"
               android:background="@drawable/custom_background_dialog_rate"
@@ -23,9 +23,9 @@
         android:layout_marginTop="@dimen/_6sdp"
         android:gravity="center_horizontal"
         android:textColor="#212121"
-        app:font_name="ios_semi_bold"
-        app:font_format="otf"
-        android:textSize="@dimen/_18ssp"/>
+        android:textSize="@dimen/_18ssp"
+        app:font_format="ttf"
+        app:font_name="Quicksand_SemiBold"/>
 
     <com.chanhbc.iother.ITextView
         android:id="@+id/txt_title"
@@ -36,9 +36,9 @@
         android:gravity="center_horizontal"
         android:text="@string/how_much_do_you_love_our_app"
         android:textColor="#212121"
-        app:font_name="ios"
-        app:font_format="otf"
-        android:textSize="@dimen/_16ssp"/>
+        android:textSize="@dimen/_16ssp"
+        app:font_format="ttf"
+        app:font_name="Quicksand_Medium"/>
 
     <RatingBar
         android:id="@+id/ratingBar"
@@ -46,8 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_marginRight="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginRight="@dimen/_10sdp"
         android:max="5"
         android:numStars="5"
         android:stepSize="1"/>
@@ -74,13 +74,15 @@
             android:text="@string/cancel"
             android:textAllCaps="false"
             android:textColor="#ff2d54"
-            android:textSize="@dimen/_18ssp"/>
+            android:textSize="@dimen/_18ssp"
+            app:font_format="ttf"
+            app:font_name="Quicksand_SemiBold"/>
 
         <View
             android:layout_width="@dimen/_1sdp"
             android:layout_height="match_parent"
             android:background="#d8d8d8"/>
-    
+
         <com.chanhbc.iother.IButton
             android:id="@+id/btn_ok"
             android:layout_width="match_parent"
@@ -92,7 +94,9 @@
             android:text="@string/rate"
             android:textAllCaps="false"
             android:textColor="#ff2d54"
-            android:textSize="@dimen/_18ssp"/>
+            android:textSize="@dimen/_18ssp"
+            app:font_format="ttf"
+            app:font_name="Quicksand_SemiBold"/>
 
     </LinearLayout>
 

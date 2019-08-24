@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="TextViewCustom">
+    <declare-styleable name="ITextView">
+        <attr name="font_name" format="string"/>
+        <attr name="font_format" format="enum">
+            <enum name="ttf" value="1"/>
+            <enum name="otf" value="2"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="IButton">
         <attr name="font_name" format="string"/>
         <attr name="font_format" format="enum">
             <enum name="ttf" value="1"/>
