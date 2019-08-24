@@ -27,8 +27,8 @@ public class ITextView extends AppCompatTextView {
 		}
 		try {
 			TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.ITextView);
-			String fontName = attributes.getString(R.styleable.ITextView_font_name);
-			int format = attributes.getInt(R.styleable.ITextView_font_format, 1);
+			String fontName = attributes.getString(R.styleable.ITextView_itv_font_name);
+			int format = attributes.getInt(R.styleable.ITextView_itv_font_format, 1);
 			if (fontName == null || fontName.isEmpty()) {
 				return;
 			}

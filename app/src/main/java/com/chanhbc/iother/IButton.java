@@ -27,8 +27,8 @@ public class IButton extends AppCompatButton {
 		}
 		try {
 			TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.IButton);
-			String fontName = attributes.getString(R.styleable.IButton_font_name);
-			int format = attributes.getInt(R.styleable.IButton_font_format, 1);
+			String fontName = attributes.getString(R.styleable.IButton_ibt_font_name);
+			int format = attributes.getInt(R.styleable.IButton_ibt_font_format, 1);
 			if (fontName == null || fontName.isEmpty()) {
 				return;
 			}
