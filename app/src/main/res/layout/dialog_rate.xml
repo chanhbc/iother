@@ -76,7 +76,7 @@
             android:textColor="#ff2d54"
             android:textSize="@dimen/_18ssp"
             app:ibt_font_format="ttf"
-            app:ibt_name="Quicksand_SemiBold"/>
+            app:ibt_font_name="Quicksand_SemiBold"/>
 
         <View
             android:layout_width="@dimen/_1sdp"
