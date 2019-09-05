@@ -21,11 +21,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/_6sdp"
+        android:paddingStart="@dimen/_8sdp"
+        android:paddingEnd="@dimen/_8sdp"
         android:gravity="center_horizontal"
         android:textColor="#212121"
-        android:textSize="@dimen/_18ssp"
+        android:text="@string/title_dialog"
+        android:textSize="@dimen/_20ssp"
         app:itv_font_format="ttf"
-        app:itv_font_name="Quicksand_SemiBold"/>
+        app:itv_font_name="Quicksand_Bold"/>
 
     <com.chanhbc.iother.ITextView
         android:id="@+id/txt_title"
@@ -33,6 +36,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/_4sdp"
+        android:paddingStart="@dimen/_16sdp"
+        android:paddingEnd="@dimen/_16sdp"
         android:gravity="center_horizontal"
         android:text="@string/how_much_do_you_love_our_app"
         android:textColor="#212121"

@@ -546,7 +546,7 @@ public class IOther {
 
 	public void feedback(String app_name, String supportEmail, String version) {
 		Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-		emailIntent.setDataAndType(Uri.parse("mailto:"), "text/html");
+		emailIntent.setData(Uri.parse("mailto:"));
 		emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{supportEmail});
 		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback App: " +
 				app_name + "(" + context.getPackageName() + ", version: " + version + ")");
