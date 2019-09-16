@@ -32,7 +32,7 @@ public class ITextView extends AppCompatTextView {
 			if (fontName == null || fontName.isEmpty()) {
 				return;
 			}
-			setTypeface(IFontUtil.getTypeface(fontName, format));
+			setTypeface(IFontUtil.getTypeface(context, fontName, format));
 		} catch (Exception e) {
 			ILog.e(e);
 		}

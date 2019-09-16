@@ -8,8 +8,8 @@ public class IFontUtil {
         return Typeface.createFromAsset(context.getAssets(), name);
     }
 
-    public static Typeface getTypeface(String name, int format) {
-        return Typeface.createFromAsset(IApp.getContext().getAssets(),
+    public static Typeface getTypeface(Context context, String name, int format) {
+        return Typeface.createFromAsset(context.getAssets(),
                 IConstant.FONTS_FOLDER + IConstant.SLASH + name + IConstant.PERIOD +
                         (format == 1 ? IConstant.TTF : IConstant.OTF));
     }
