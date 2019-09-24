@@ -52,5 +52,10 @@ public class IConstant {
 
 	public static final String TTF = "ttf";
 	public static final String OTF = "otf";
+	public static final String FONT_DEFAULT_BOLD = "Quicksand_Bold.ttf";
+	public static final String FONT_DEFAULT_SEMI_BOLD = "Quicksand_SemiBold.ttf";
+	public static final String FONT_DEFAULT_MEDIUM = "Quicksand_Medium.ttf";
+	public static final String FONT_DEFAULT_REGULAR = "Quicksand_Regular.ttf";
+	public static final String FONT_DEFAULT_LIGHT = "Quicksand_Light.ttf";
 	public static final String KEY_IS_RATE = "key_is_rate";
 }

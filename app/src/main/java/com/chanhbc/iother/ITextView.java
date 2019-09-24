@@ -3,6 +3,7 @@ package com.chanhbc.iother;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
@@ -26,13 +27,24 @@ public class ITextView extends AppCompatTextView {
 			return;
 		}
 		try {
-			TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.ITextView);
-			String fontName = attributes.getString(R.styleable.ITextView_itv_font_name);
-			int format = attributes.getInt(R.styleable.ITextView_itv_font_format, 1);
-			if (fontName == null || fontName.isEmpty()) {
-				return;
-			}
-			setTypeface(IFontUtil.getTypeface(context, fontName, format));
+            final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.ITextView);
+            final String fontName = attributes.getString(R.styleable.ITextView_itv_font_name);
+            Typeface typeface;
+            if (fontName != null && !fontName.isEmpty()) {
+                final int format = attributes.getInt(R.styleable.ITextView_itv_font_format, -1);
+                typeface = IFontUtil.getTypeface(context, fontName, format);
+                if (typeface != null) {
+                    setTypeface(typeface);
+                    return;
+                }
+            }
+            final int fontDefault = attributes.getInt(R.styleable.ITextView_itv_font_default, -1);
+            typeface = IFontUtil.getTypeface(context, fontDefault);
+            if (typeface != null) {
+                setTypeface(typeface);
+                return;
+            }
+            setTypeface(Typeface.DEFAULT);
 		} catch (Exception e) {
 			ILog.e(e);
 		}

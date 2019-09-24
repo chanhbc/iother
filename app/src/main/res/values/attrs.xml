@@ -6,6 +6,13 @@
             <enum name="ttf" value="1"/>
             <enum name="otf" value="2"/>
         </attr>
+        <attr name="itv_font_default" format="enum">
+            <enum name="bold" value="1"/>
+            <enum name="semi_bold" value="2"/>
+            <enum name="medium" value="3"/>
+            <enum name="regular" value="4"/>
+            <enum name="light" value="5"/>
+        </attr>
     </declare-styleable>
 
     <declare-styleable name="IButton">
@@ -13,6 +20,28 @@
         <attr name="ibt_font_format" format="enum">
             <enum name="ttf" value="1"/>
             <enum name="otf" value="2"/>
+        </attr>
+        <attr name="ibt_font_default" format="enum">
+            <enum name="bold" value="1"/>
+            <enum name="semi_bold" value="2"/>
+            <enum name="medium" value="3"/>
+            <enum name="regular" value="4"/>
+            <enum name="light" value="5"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="IEditText">
+        <attr name="iet_font_name" format="string"/>
+        <attr name="iet_font_format" format="enum">
+            <enum name="ttf" value="1"/>
+            <enum name="otf" value="2"/>
+        </attr>
+        <attr name="iet_font_default" format="enum">
+            <enum name="bold" value="1"/>
+            <enum name="semi_bold" value="2"/>
+            <enum name="medium" value="3"/>
+            <enum name="regular" value="4"/>
+            <enum name="light" value="5"/>
         </attr>
     </declare-styleable>
 </resources>
