@@ -8,13 +8,21 @@ import java.util.ArrayList;
 
 public class IShared implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static IShared instance;
-    private SharedPreferences sharedPreferences;
+    private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
 
     @SuppressLint("CommitPrefEdits")
     private IShared(Context context) {
-        this.sharedPreferences = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
-        this.mEditor = this.sharedPreferences.edit();
+        this.mSharedPreferences = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
+        this.mEditor = this.mSharedPreferences.edit();
+        registerChangeListener();
+    }
+
+    public void release(){
+        unregisterChangeListener();
+        this.mEditor = null;
+        this.mSharedPreferences = null;
+        instance = null;
     }
 
     public static IShared getInstance(Context context) {
@@ -24,12 +32,12 @@ public class IShared implements SharedPreferences.OnSharedPreferenceChangeListen
         return instance;
     }
 
-    public void registerChangeListener() {
-        this.sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+    private void registerChangeListener() {
+        this.mSharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
-    public void unregisterChangeListener() {
-        this.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+    private void unregisterChangeListener() {
+        this.mSharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     public void removeKey(String key) {
@@ -48,7 +56,7 @@ public class IShared implements SharedPreferences.OnSharedPreferenceChangeListen
     }
 
     public boolean getBoolean(String key, boolean defaultValue) {
-        return this.sharedPreferences.getBoolean(key, defaultValue);
+        return this.mSharedPreferences.getBoolean(key, defaultValue);
     }
 
     public void putBoolean(String key, boolean value) {
@@ -63,7 +71,7 @@ public class IShared implements SharedPreferences.OnSharedPreferenceChangeListen
     }
 
     public int getInt(String key, int defaultValue) {
-        return this.sharedPreferences.getInt(key, defaultValue);
+        return this.mSharedPreferences.getInt(key, defaultValue);
     }
 
     public void putInt(String key, int value) {
@@ -79,7 +87,7 @@ public class IShared implements SharedPreferences.OnSharedPreferenceChangeListen
     }
 
     public long getLong(String key, long defaultValue) {
-        return this.sharedPreferences.getLong(key, defaultValue);
+        return this.mSharedPreferences.getLong(key, defaultValue);
     }
 
     public void putLong(String key, long value) {
@@ -94,7 +102,7 @@ public class IShared implements SharedPreferences.OnSharedPreferenceChangeListen
     }
 
     public float getFloat(String key, float defaultValue) {
-        return this.sharedPreferences.getFloat(key, defaultValue);
+        return this.mSharedPreferences.getFloat(key, defaultValue);
     }
 
     public void putFloat(String key, float value) {
@@ -109,7 +117,7 @@ public class IShared implements SharedPreferences.OnSharedPreferenceChangeListen
     }
 
     public String getString(String key, String defaultValue) {
-        return this.sharedPreferences.getString(key, defaultValue);
+        return this.mSharedPreferences.getString(key, defaultValue);
     }
 
     public void putString(String key, String value) {
