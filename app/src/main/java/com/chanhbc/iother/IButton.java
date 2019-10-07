@@ -13,7 +13,7 @@ public class IButton extends AppCompatButton {
     }
 
     public IButton(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        this(context, attrs, android.R.attr.buttonStyle);
     }
 
     public IButton(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -27,24 +27,20 @@ public class IButton extends AppCompatButton {
             return;
         }
         try {
+            final int textStyle = attrs.getAttributeIntValue(IConstant.ANDROID_SCHEMA, "textStyle", Typeface.NORMAL);
             final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.IButton);
             final String fontName = attributes.getString(R.styleable.IButton_ibt_font_name);
-            Typeface typeface;
+            final Typeface typeface;
             if (fontName != null && !fontName.isEmpty()) {
                 final int format = attributes.getInt(R.styleable.IButton_ibt_font_format, -1);
                 typeface = IFontUtil.getTypeface(context, fontName, format);
-                if (typeface != null) {
-                    setTypeface(typeface);
-                    return;
-                }
+            } else {
+                final int fontDefault = attributes.getInt(R.styleable.IButton_ibt_font_default, -1);
+                typeface = IFontUtil.getTypeface(context, fontDefault);
             }
-            final int fontDefault = attributes.getInt(R.styleable.IButton_ibt_font_default, -1);
-            typeface = IFontUtil.getTypeface(context, fontDefault);
             if (typeface != null) {
-                setTypeface(typeface);
-                return;
+                setTypeface(typeface, textStyle);
             }
-            setTypeface(Typeface.DEFAULT);
         } catch (Exception e) {
             ILog.e(e);
         }

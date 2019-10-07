@@ -13,7 +13,7 @@ public class IEditText extends AppCompatEditText {
     }
 
     public IEditText(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        this(context, attrs, android.R.attr.editTextStyle);
     }
 
     public IEditText(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -27,24 +27,20 @@ public class IEditText extends AppCompatEditText {
             return;
         }
         try {
+            final int textStyle = attrs.getAttributeIntValue(IConstant.ANDROID_SCHEMA, "textStyle", Typeface.NORMAL);
             final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.IEditText);
             final String fontName = attributes.getString(R.styleable.IEditText_iet_font_name);
-            Typeface typeface;
+            final Typeface typeface;
             if (fontName != null && !fontName.isEmpty()) {
                 final int format = attributes.getInt(R.styleable.IEditText_iet_font_format, -1);
                 typeface = IFontUtil.getTypeface(context, fontName, format);
-                if (typeface != null) {
-                    setTypeface(typeface);
-                    return;
-                }
+            }else {
+                final int fontDefault = attributes.getInt(R.styleable.IEditText_iet_font_default, -1);
+                typeface = IFontUtil.getTypeface(context, fontDefault);
             }
-            final int fontDefault = attributes.getInt(R.styleable.IEditText_iet_font_default, -1);
-            typeface = IFontUtil.getTypeface(context, fontDefault);
             if (typeface != null) {
-                setTypeface(typeface);
-                return;
+                setTypeface(typeface, textStyle);
             }
-            setTypeface(Typeface.DEFAULT);
         } catch (Exception e) {
             ILog.e(e);
         }
