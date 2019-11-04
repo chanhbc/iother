@@ -32,7 +32,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -58,7 +57,7 @@ public class IOther {
         return instance;
     }
 
-    public static void release(){
+    public static void release() {
         instance = null;
     }
 
@@ -241,36 +240,6 @@ public class IOther {
         return bitmap;
     }
 
-    public static File saveBitmap(Bitmap bmp, String folder, String name) {
-        String path = Environment.getExternalStorageDirectory().toString()
-                + "/" + folder + "/";
-        File f = new File(path);
-        if (!f.exists()) {
-            if (!f.mkdirs()) {
-                ILog.e("Create directory fail");
-            }
-        }
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat sdf = new SimpleDateFormat("_HH_mm_ss_dd_MM_yyyy");
-        String currentDateAndTime = sdf.format(new Date());
-        String fileName = name + currentDateAndTime;
-        File file = new File(path, fileName + ".png");
-        if (file.exists()) {
-            if (!file.delete()) {
-                ILog.e("delete \"" + fileName + "\" error");
-            }
-        }
-        try {
-            OutputStream outStream = new FileOutputStream(file);
-            bmp.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-            outStream.flush();
-            outStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return file;
-    }
-
     public static Bitmap getBitmapResize(Bitmap bitmap, int max, boolean filter) {
         int wb = bitmap.getWidth();
         int hb = bitmap.getHeight();
@@ -380,24 +349,85 @@ public class IOther {
 
     public void saveBitmapCache(Bitmap bitmap) {
         // save bitmap to cache directory
-        saveBitmapCache("image_cache", bitmap);
+        saveBitmapCache(bitmap, "image_cache");
     }
 
-    public void saveBitmapCache(String fileName, Bitmap bitmap) {
+    public void saveBitmapCache(Bitmap bitmap, String fileName) {
         // save bitmap to cache directory
-        File cachePath = new File(context.getCacheDir(), "images");
-        saveBitmapCache(cachePath, fileName, bitmap);
+        File filePath = new File(context.getCacheDir(), "images");
+        saveBitmapPNG(bitmap, filePath, fileName);
     }
 
-    public void saveBitmapCache(File filePath, String fileName, Bitmap bitmap) {
+    public static void saveBitmapPNG(Bitmap bitmap) {
+        saveBitmap(bitmap, Bitmap.CompressFormat.PNG);
+    }
+
+    public static void saveBitmap(Bitmap bitmap, Bitmap.CompressFormat compressFormat) {
+        String path = Environment.getExternalStorageDirectory().toString()
+                + IConstant.SLASH + Environment.DIRECTORY_PICTURES + IConstant.SLASH;
+        File filePath = new File(path);
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat sdf = new SimpleDateFormat("_HH_mm_ss_dd_MM_yyyy");
+        String currentDateAndTime = sdf.format(new Date());
+        String fileName = "IMG" + currentDateAndTime;
+        saveBitmap(bitmap, filePath, fileName, compressFormat);
+    }
+
+    public static void saveBitmapPNG(Bitmap bitmap, String fileName) {
+        saveBitmap(bitmap, fileName, Bitmap.CompressFormat.PNG);
+    }
+
+    public static void saveBitmap(Bitmap bitmap, String fileName, Bitmap.CompressFormat compressFormat) {
+        String path = Environment.getExternalStorageDirectory().toString()
+                + IConstant.SLASH + Environment.DIRECTORY_PICTURES + IConstant.SLASH;
+        File filePath = new File(path);
+        saveBitmap(bitmap, filePath, fileName, compressFormat);
+    }
+
+    public static void saveBitmapPNG(Bitmap bitmap, String folder, String fileName) {
+        saveBitmap(bitmap, folder, fileName, Bitmap.CompressFormat.PNG);
+    }
+
+    public static void saveBitmap(Bitmap bitmap, String folder, String fileName, Bitmap.CompressFormat compressFormat) {
+        String path = Environment.getExternalStorageDirectory().toString()
+                + IConstant.SLASH + folder + IConstant.SLASH;
+        File filePath = new File(path);
+        saveBitmap(bitmap, filePath, fileName, compressFormat);
+    }
+
+    public static void saveBitmapPNG(Bitmap bitmap, File filePath, String fileName) {
+        saveBitmap(bitmap, filePath, fileName, Bitmap.CompressFormat.PNG);
+    }
+
+    public static void saveBitmap(Bitmap bitmap, File filePath, String fileName, Bitmap.CompressFormat compressFormat) {
         try {
             if (!filePath.exists()) {
                 if (!filePath.mkdirs()) {
                     ILog.e("create directory fail");
                 }
             }
-            FileOutputStream stream = new FileOutputStream(filePath + "/" + fileName + ".png");
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            final String fileNameExtension;
+            switch (compressFormat) {
+                case JPEG:
+                    fileNameExtension = ".jpg";
+                    break;
+
+                case WEBP:
+                    fileNameExtension = ".webp";
+                    break;
+
+                default:
+                    fileNameExtension = ".png";
+                    break;
+            }
+            File file = new File(filePath + IConstant.SLASH + fileName + fileNameExtension);
+            if (file.exists()) {
+                if (!file.delete()) {
+                    ILog.e("delete \"" + fileName + "\" error");
+                }
+            }
+            FileOutputStream stream = new FileOutputStream(file);
+            bitmap.compress(compressFormat, 100, stream);
             stream.close();
         } catch (IOException e) {
             e.printStackTrace();
