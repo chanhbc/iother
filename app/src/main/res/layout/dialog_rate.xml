@@ -27,8 +27,7 @@
         android:textColor="#212121"
         android:text="@string/title_dialog"
         android:textSize="@dimen/_20ssp"
-        app:itv_font_format="ttf"
-        app:itv_font_name="Quicksand_Bold"/>
+        app:itv_font_default="bold"/>
 
     <com.chanhbc.iother.ITextView
         android:id="@+id/txt_title"
@@ -42,8 +41,7 @@
         android:text="@string/how_much_do_you_love_our_app"
         android:textColor="#212121"
         android:textSize="@dimen/_16ssp"
-        app:itv_font_format="ttf"
-        app:itv_font_name="Quicksand_Medium"/>
+        app:itv_font_default="medium"/>
 
     <RatingBar
         android:id="@+id/ratingBar"
@@ -80,8 +78,7 @@
             android:textAllCaps="false"
             android:textColor="#ff2d54"
             android:textSize="@dimen/_18ssp"
-            app:ibt_font_format="ttf"
-            app:ibt_font_name="Quicksand_Bold"/>
+            app:itv_font_default="bold"/>
 
         <View
             android:layout_width="@dimen/_1sdp"
@@ -100,8 +97,7 @@
             android:textAllCaps="false"
             android:textColor="#ff2d54"
             android:textSize="@dimen/_18ssp"
-            app:ibt_font_format="ttf"
-            app:ibt_font_name="Quicksand_Bold"/>
+            app:itv_font_default="bold"/>
 
     </LinearLayout>
 

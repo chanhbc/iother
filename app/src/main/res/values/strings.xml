@@ -1,6 +1,7 @@
 <resources>
     <string name="title_dialog">RATE THIS APP</string>
     <string name="cancel">Cancel</string>
+    <string name="exit">Exit</string>
     <string name="rate">Rate</string>
     <string name="feedback">Feedback</string>
     <string name="how_much_do_you_love_our_app">How much do you love our app?</string>

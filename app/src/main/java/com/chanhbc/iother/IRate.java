@@ -24,6 +24,7 @@ public class IRate extends Dialog {
     private String email;
     private int numberStar = 3;
     private boolean isExit;
+    private Button btnNotNow;
 
     public void setNumberStar(int numberStar) {
         this.numberStar = numberStar;
@@ -64,7 +65,7 @@ public class IRate extends Dialog {
 
     private void initDialog() {
         final Button btnOk = findViewById(R.id.btn_ok);
-        Button btnNotNow = findViewById(R.id.btn_cancel);
+        btnNotNow = findViewById(R.id.btn_cancel);
         TextView txtAppName = findViewById(R.id.txt_name_app);
         ImageView imageIcon = findViewById(R.id.img_icon_app);
 
@@ -109,6 +110,11 @@ public class IRate extends Dialog {
                         context.getString(R.string.rate) : context.getString(R.string.feedback));
             }
         });
+        setRateNumber(5);
+    }
+
+    private void setRateNumber(int rateNumber) {
+        mBar.setNumStars(rateNumber);
     }
 
     private void finish() {
@@ -119,6 +125,7 @@ public class IRate extends Dialog {
 
     public void show(boolean exit) {
         this.isExit = exit;
+        btnNotNow.setText(isExit ? R.string.exit : R.string.cancel);
         this.show();
     }
 

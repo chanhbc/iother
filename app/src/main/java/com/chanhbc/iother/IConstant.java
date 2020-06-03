@@ -4,6 +4,8 @@ public class IConstant {
     private IConstant() {
     }
 
+    public static final int INDEX_NOT_FOUND = -1;
+    public static final int INDEX_FIRST = 0;
     public static final String ANDROID_SCHEMA = "http://schemas.android.com/apk/res/android";
     public static final String PERMISSION_AUTO_START = "permission_auto_start";
     public static final int REQUEST_CODE_DRAW_OVERLAY_PERMISSIONS = 6996;
